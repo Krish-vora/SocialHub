@@ -61,7 +61,7 @@ def home(request):
             form.instance.user = request.user
             form.save()
             return redirect('home')
-       
+     #new branch  
      #search for new user query
      global searched_users
      searched_users = ''
