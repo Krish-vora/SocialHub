@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+     <link rel="stylesheet" href="{% static 'fontawesome-free-6.6.0-web/css/all.min.css' %}">
+     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+     <link rel="icon" href="/static/image/socialHub_Logo.jpg">
+     <title>Signup</title>
+</head>
+<style>
+     .input {
+          width: 14rem;
+          background: none;
+     }
+
+     body {
+          animation: trans 0.40s linear;
+     }
+
+     @keyframes trans {
+          from {
+               opacity: 0;
+               transform: rotateX(10deg);
+          }
+
+          to {
+               opacity: 1;
+               transform: rotateY(0);
+          }
+     }
+     #man-image{
+          width: 800px;
+     }
+</style>
+
+<body>
+     <img class="wave" src="/static/image/wave.png">
+     <div class="container">
+          <div class="img">
+               <div class="flex justify-between items-center text-3xl absolute left-1 bottom-5">
+                    <img src="/static/image/socialHub_Logo.jpg" style="width: 40px;height: 40px;border-radius: 50%;">
+                    <a href="/socialHub/" class="text-xl font-bold text-gray-800 ml-2 hover:no-underline">SocialHub</a>
+               </div>
+               <img src="/static/image/bg.svg" id="man-image" style="width: 1000px;" draggable="false">
+          </div>
+          <div class="login-container">
+               <form class="shadow-2xl rounded-3xl py-2 px-10" method="POST">
+                    {% csrf_token %}
+                    <img src="/static/image/avatar.svg" class="avtar" draggable="false">
+                    <h3 class="text-3xl font-300">Signup</h3>
+                    {% if messages %}
+                    {% for message in messages %}
+                    {% if message.tags == "error" %}
+                    <div class="message bg-red-100 rounded-lg w-75 mb-0 text-red-900">
+                         {{message}}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    <div class="input-div one h-11 focus mb-2">
+                         <div class="i">
+                              <i class="fas fa-user text-green-600"></i>
+                         </div>
+                         <div>
+                              <input type="text" class="input" placeholder="UserName" name="username" required>
+                         </div>
+                    </div>
+                    <div class="input-div two h-11 mb-1">
+                         <div class="i">
+                              <i class="fas fa-lock text-green-600"></i>
+                         </div>
+                         <div>
+                              <input type="password" class="input" placeholder="Password" name="password" required>
+                         </div>
+                    </div>
+                    <div class="input-div two h-11 mb-2">
+                         <div class="i">
+                              <i class="fas fa-lock text-green-600"></i>
+                         </div>
+                         <div>
+                              <input type="password" class="input w-full bg-gray-300" placeholder="Confirm Password"
+                                   name="cnfpassword" required>
+                         </div>
+                    </div>
+
+                    <p>Already have an account?&nbsp;<a href="/login/" class="text-blue-500 hover:text-green-700 hover:no-underline">Login</a>
+                    </p>
+                    <a href="/profile_data/"><button type="submit"
+                              class="btn btn-primary mt-3 bg-green-600 hover:text-white shadow-xl rounded-3xl w-60">Signup</button></a>
+                    <script type="text/javascript" src="/static/js/login.js">
+                    </script>
+               </form>
+          </div>
+     </div>
+</body>
+
+
+</html>

@@ -1,0 +1,117 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     
+     <!-- login.css comman css -->
+     <link rel="stylesheet" href="{% static 'css/login.css' %}">
+     <!-- fontawasome cdn for icons -->
+     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+     <link rel="stylesheet" href=" {% static 'fontawesome-free-6.6.0-web/css/all.min.css' %}">
+     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+     <link rel="icon" href="/static/image/socialHub_Logo.jpg">
+     <title>Login</title>
+</head>
+<style>
+     a:hover {
+          text-decoration: none;
+     }
+
+     .input {
+          width: 17rem;
+          background: none;
+     }
+
+     form {
+          width: 350px;
+     }
+
+     #p_man {
+          filter: drop-shadow(1px 1px 10px 1px rgb(121, 121, 121));
+     }
+
+     body {
+          animation: trans 0.40s linear;
+     }
+
+     @keyframes trans {
+          from {
+               opacity: 0;
+               transform: rotateX(10deg);
+          }
+
+          to {
+               opacity: 1;
+               transform: rotateY(0);
+          }
+     }
+</style>
+
+<body>
+     <img class="wave" src="/static/image/wave.png" draggable="false">
+     <div class="container">
+          <div class="img">
+
+               <div class="flex justify-between items-center text-3xl absolute left-1 bottom-5 logo">
+                    <img src="/static/image/socialHub_Logo.jpg" style="width: 40px;height: 40px;" class="rounded-3xl">
+                    <a href="/socialHub/" class="text-xl font-bold text-gray-800 ml-2">SocialHub</a>
+               </div>
+               <div id="kpkp" style="width: 250px;"></div>
+          </div>
+
+          <div class="login-container">
+               <form class="shadow-2xl rounded-3xl py-3 " method="POST">
+                    {% csrf_token %}
+                    
+                    <img src="/static/image/avatar.svg" class="avtar" id="p_man" draggable="false">
+                    <h2>Login</h2>
+                    {% if messages %}
+                    {% for message in messages %}
+                    {% if message.tags == "error" %}
+                    <div class="message bg-red-100 rounded-lg w-75 mb-0 text-red-900">
+                         {{message}}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    <div class="input-div one h-10 mt-2 focus">
+                         <div class="i">
+                              <i class="fas fa-user text-green-600"></i>
+                         </div>
+                         <div>
+                              <input type="text" class="input" name="username" placeholder="UserName" autocomplete="off"
+                                   required>
+                         </div>
+                    </div>
+                    <div class="input-div two h-10 mb-3">
+                         <div class="i">
+                              <i class="fas fa-lock text-green-600"></i>
+                         </div>
+                         <div>
+                              <input type="password" class="input" name="password" placeholder="Password" required>
+                         </div>
+                    </div>
+                    <p>You don't Have An Account?&nbsp;<a href="/signup/"
+                              class="text-blue-500 hover:text-green-700 ">SignUp</a></p>
+                    <button type="submit"
+                         class="btn btn-primary mt-3 bg-green-600 hover:text-white shadow-xl rounded-3xl w-60">login</button>
+                    <script type="text/javascript" src="/static/js/login.js">
+                    </script>
+
+
+
+               </form>
+          </div>
+     </div>
+
+     <script src="/static/login.js"></script>
+
+</body>
+
+</html>

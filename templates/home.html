@@ -1,0 +1,449 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>SocilHub</title>
+     <!-- home.css comman css -->
+     <link rel="stylesheet" href="/static/css/home.css">
+     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+
+     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+     <link rel="icon" href="/static/image/socialHub_Logo.jpg">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <script src="/static/jQuery.txt"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css" />
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+</head>
+<style>
+     body {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+          /* font-family: Arial, Helvetica, sans-serif; */
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          /* font-family: Montserrat; */
+          /* font-family: Georgia, 'Times New Roman', Times, serif; */
+     }
+
+     .container-fluid::-webkit-scrollbar {
+          width: 120px;
+     }
+
+     .home-main::-webkit-scrollbar {
+
+          scrollbar-width: thin;
+          scrollbar-gutter: stable;
+     }
+
+     .home-right::-webkit-scrollbar,
+     .searched::-webkit-scrollbar {
+          width: 1px;
+          scrollbar-width: thin;
+          scrollbar-gutter: stable;
+     }
+
+     #loader {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+          /* Ensure it's on top */
+     }
+
+     .spinner {
+          position: relative;
+          width: 60px;
+          height: 60px;
+          border: 4px solid #f3f3f3;
+          border-top: 4px solid #3498db;
+          border-radius: 50%;
+          animation: spin 0.7s linear infinite;
+          top: 45%;
+          left: 47.5%;
+          display: flex;
+     }
+
+     @keyframes spin {
+          0% {
+               transform: rotate(0deg);
+          }
+
+          100% {
+               transform: rotate(360deg);
+          }
+     }
+
+     .menu a:focus {
+          color: black;
+     }
+
+     @media screen and (max-width:480px) {
+          .home-left {
+               display: none;
+          }
+     }
+
+     .func:hover {
+          border: 0.2px solid rgb(164, 164, 164);
+     }
+</style>
+
+<body>
+     <div class=" container-fluid home-wrapper flex justify-between rounded-3xl my-1 shadow-2xl "
+          style="height: 98vh;width: 97vw;border: 0.01px solid rgb(223, 223, 223);">
+
+          <div class="home-left w-25 flex mr-1 h-full flex-col mx-1 pt-3">
+               <div class="profile w-90 flex justify-center flex-col items-center">
+                    <div class="img bg-blue-300 rounded-full">
+                         <img src="{{data.user_profile.profile_photo.url}}" alt="" class="rounded-full w-20 h-20"
+                              style="object-fit: cover;">
+                    </div>
+                    <div class="name">
+                         <a href="/profile/{{user.username}}" class="hover:no-underline">
+                              <p class="font-bold pt-2">{{user.username}}</p>
+                         </a>
+                    </div>
+               </div>
+               <br>
+               <div class="functionality w-75 flex flex-col justify-left ml-2">
+                    <label for="pr_imgs"
+                         class="func flex items-center justify-left cursor-pointer hover:text-blue-800 hover:bg-gray-100 h-10 rounded-xl mb-2 cursor-pointer create-post">
+                         <div class="flex items-center justify-left pl-2  cursor-pointer ">
+
+                              <i class="fa w-5 fa-plus-square"></i>
+                              <p class="pl-3 font-bold">Create Post</p>
+
+                         </div>
+                    </label>
+                    <div
+                         class="func Settings flex items-center justify-left pl-2 hover:bg-gray-100 h-10 rounded-xl mb-2 cursor-pointer hover:text-blue-800">
+                         <i class="fa w-5 fa-cog"></i>
+                         <p class="pl-3 font-bold">Settings</p>
+                    </div>
+                    <a class="func flex items-center justify-left cursor-pointer hover:text-blue-800 hover:bg-gray-100 h-10 rounded-xl mb-2 cursor-pointer hover:no-underline"
+                         href="/home/?saved_post=True">
+                         <div class="flex items-center justify-left  pl-2 cursor-pointer">
+                              <i class="fa w-5 fa-bookmark"></i>
+                              <p class="pl-3 font-bold">Saved</p>&nbsp;
+                              <l class="font-bold text-gray-400 rounded-2xl" id="tps">({{data.total_saved_post}})</l>
+
+                         </div>
+                    </a>
+                    <a class="func flex items-center justify-left cursor-pointer hover:text-blue-800 hover:bg-gray-100 h-10 rounded-xl mb-2 cursor-pointer hover:no-underline"
+                         href="/home/?liked_post=True">
+                         <div class="flex items-center justify-left pl-2 cursor-pointer">
+                              <i class="fas fa-heart  w-5"></i>
+                              <p class="pl-3 font-bold friends_show">Liked</p>&nbsp;
+                              <l class="font-bold text-gray-400 ">({{data.total_liked_post}})</l>
+                         </div>
+                    </a>
+                    <a href="/edit_profile/" class="hover:no-underline mb-1">
+                         <div
+                              class="func flex items-center justify-left pl-2 hover:bg-gray-100 h-10 rounded-xl mb-2 cursor-pointer hover:text-blue-800">
+                              <i class="fa w-5 fa-pencil"></i>
+
+                              <p class="pl-3 font-bold">Edit Profile</p>
+
+                         </div>
+                    </a>
+                    <div class="logout">
+                         <a href="/logout_view/"><button class="btn btn-dark w-full rounded-xl">Logout</button></a>
+                    </div>
+               </div>
+          </div>
+          <div class="home-main w-50 mx-1 pt-3" style="height: auto;overflow-y: scroll;">
+               <div class="feeds ">
+                    <div class="labels flex justify-between items-center">
+                         <div class="logo ">
+                              <h3 class="text-2xl font-bold"
+                                   style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                                   SocialHub</h3>
+                         </div>
+                         <div class="menu flex text-gray-500">
+                              <a class="mx-2 font-bold text-gray-500 cursor-pointer hover:no-underline hover:text-black"
+                                   href="/home/?recent_post=True">Recents</a>
+                              <a class="mx-2 font-bold text-gray-500 cursor-pointer hover:no-underline hover:text-black"
+                                   href="/home/?friends_post=True">Friend's Post</a>
+                              <a class="mx-2 font-bold text-gray-500 cursor-pointer hover:no-underline hover:text-black"
+                                   href="/home/?saved_post=True">Saved</a>
+                         </div>
+                    </div>
+               </div>
+               <br>
+               {% for i in data.posts %}
+               <div class="posts bg-gray-50 shadow rounded-3xl py-3 px-4  mb-2">
+                    <div class="post-in relative">
+                         <div class="profile flex justify-between items-center">
+                              <div class="username flex items-center">
+                                   <img src="{{i.user.userprofile.profile_photo.url}}" alt=""
+                                        class="w-11 h-11 rounded-full mr-2 bg-blue-300" style="object-fit: cover;">
+                                   <div>
+                                        <a href="/profile/{{i.user.username}}"
+                                             class="cursor-pointer hover:no-underline">
+                                             <p class="font-bold inline">{{i.user}}</p>
+                                        </a>
+                                        <p class="text-xs">{{i.created_at}}</p>
+                                   </div>
+                              </div>
+
+                              {% if i.user_id not in data.friends_list %}
+                              <form method="POST" action="/add_friend/{{i.user_id}}">
+                                   {% csrf_token %}
+                                   <button class="btn btn-outline-dark rounded-lg btn-sm" type="submit">Add
+                                        Friend</button>
+                              </form>
+                              {% else %}
+                              <a class="cursor-pointer hover:no-underline hover:text-blue-700 ml-2"
+                                   href=" /profile/{{i.user.username}}"> <button
+                                        class="btn btn-dark btn-sm rounded-lg">View
+                                        Friend</button></a>
+                              {% endif %}
+                         </div>
+                         <p class="my-3 text-sm ml-1 font-semibold">{{i.caption}}</p>
+                         <div class="post-img flex flex-col items-center">
+                              <img src="{{i.post_image.url}}" alt="" class=" fit-cover rounded-2xl bg-blue-300"
+                                   style="width: 100%;object-fit: cover;height: auto;border: 0.2px solid rgb(213, 213, 213);">
+                         </div>
+                         <div class="post-footer pt-2 px-1">
+                              <div class="likes flex items-center justify-between">
+                                   <div class="flex items-center justify-left">
+                                        {% if i.id not in data.is_liked %}
+                                        <div class="like flex items-center">
+                                             <a href="/likepost/{{i.id}}" class="no-underline">
+                                                  <i class="fa fa-heart-o mr-1 cursor-pointer mt-1"
+                                                       style="font-size: 21px;"></i>
+                                             </a>
+                                             {{i.no_of_like}}&nbsp;{% if i.no_of_like > 1 %}Likes{% else %}Like
+                                             {% endif %}
+                                        </div>
+                                        {% else %}
+                                        <div class="like flex items-center">
+                                             <a href="/likepost/{{i.id}}" class="no-underline">
+                                                  <i class="fa fa-heart mr-1 cursor-pointer mt-1"
+                                                       style="color:red;font-size: 21px;"></i>
+                                             </a>
+                                             {{i.no_of_like}}&nbsp;{% if i.no_of_like > 1 %}Likes{% else %}Like
+                                             {% endif %}
+                                        </div>
+                                        {% endif %}
+
+                                        {% if i.id not in data.is_save %}
+                                        <div class="saves_post flex items-center justify-center"
+                                             style="margin-left: 8px;">
+
+                                             <i class="fa bookmark-icon fa-bookmark-o cursor-pointer text-3xl hover:text-blue-700 mr-1 mt-1"
+                                                  style="font-size: 21px;" data-post-id="{{ i.id }}"></i>
+
+                                             <p id="svd">save</p>
+                                        </div>
+                                        {% else %}
+                                        <div class="saves_post flex items-center justify-center"
+                                             style="margin-left: 8px;">
+
+                                             <i class="fa bookmark-icon fa-bookmark cursor-pointer text-3xl mr-1 mt-1"
+                                                  style="font-size: 21px;" data-post-id="{{ i.id }}"></i>
+
+                                             <p id="svd">saved</p>
+                                        </div>
+                                        {% endif %}
+                                   </div>
+                                   <div>
+                                        <a class="cursor-pointer hover:no-underline hover:text-blue-700 ml-2"
+                                             href="{{i.post_image.url}}" download> <i class="fa-solid fa-download"
+                                                  style="font-size: 21px;" title="Download Post"
+                                                  data-post-id="{{i.id }}"></i></a>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+               {% endfor %}
+               {% if data.posts.count == 0 %}
+               <div class="bg-gray-100 rounded-xl font-semibold w-100 flex items-center justify-center mx-auto h-20"
+                    style="border: 0.2px solid rgb(223, 223, 223);">
+                    <p>No Posts Here......
+                    <p>
+               </div>
+               {% endif %}
+               <br>
+          </div>
+          <div class="home-right w-25 mx-1 ml-4 pt-3 " style="overflow: scroll;">
+               <div class="Freinds">
+                    <p class="text-2xl font-bold mb-1 flex items-center">Friends&nbsp;
+                         <l class="text-white font-semibold text-white rounded-full bg-black flex items-center justify-center mt-1"
+                              style="padding: 10px;width: 20px;height: 20px;font-size: 18px;">
+                              {{data.total_friends}}</l>
+                    </p>
+                    <div
+                         class="bg-blue-50 rounded-3xl shadow h-10 w-full outline-none mb-3 flex items-center justify-center search-user">
+                         <form method="get">
+                              <input type="search" id="search" placeholder="Search For Freinds...."
+                                   style="background: none;outline: none;" name="username" autocomplete="off">
+                              <button style="outline: none;" type="submit"><i class="fa fa-search"></i></button>
+                         </form>
+                    </div>
+                    <div class="searched p-2 rounded-2xl absolute bg-gray-100 pt-3"
+                         style="width: 6.74cm;display: none;height: 10cm;overflow-y: scroll;">
+                         <i class="fa fa-close absolute close_search cursor-pointer" style="right: 15px;top: 8px;"></i>
+                         {% if data.searched_users %}
+                         {% for i in data.searched_users %}
+                         {% if i.user != request.user %}
+                         <div class="frd-img flex items-center  mb-2">
+                              <img src="{{i.profile_photo.url}}" alt="" class="mr-2 w-8 h-8 rounded-full bg-blue-300"
+                                   style="object-fit: cover;">
+                              <a href="/profile/{{i.user}}" class="hover:no-underline">
+                                   <p class="h-full font-semibold">{{i.user}}</p>
+                              </a>
+                         </div>
+                         {% endif %}
+                         {% endfor %}
+                         {% endif %}
+                    </div>
+                    {% for i in data.friends %}
+                    <div class="frd-img flex items-center justify-between mb-3" style="z-index: -1;">
+                         <div class="frd-img flex items-center">
+                              <img src="{{i.friend.userprofile.profile_photo.url}}" alt=""
+                                   class="mr-2 w-8 h-8 rounded-full bg-blue-300" style="object-fit: cover;">
+                              <a href="/profile/{{i.friend}}" class="hover:no-underline">
+                                   <p class="h-full font-semibold">{{i.friend}}</p>
+                              </a>
+                         </div>
+                         <div class="flex items-center">
+                              <a href="/add_friend/{{i.friend_id}}" class="hover:no-underline"><button
+                                        class="btn  btn-dark rounded-xl btn-sm flex items-center p-2 "
+                                        style="height: 0.9cm;" title="Remove Friend">Remove</button></a>
+                         </div>
+                    </div>
+                    {% endfor %}
+               </div>
+          </div>
+     </div>
+     <div class="post-form absolute shadow-lg bg-gray-100 rounded-2xl p-5 shadow text-center hidden"
+          style="top:50px; left: 29%;width: 40%; margin: auto;">
+          <button class="cls absolute flex items-center justify-center bg-blue-300 outline-none rounded"
+               style="top: 10px;right: 10px;width: 30px;height:30px"><i class="fa fa-close"></i></button>
+          <form class="flex justify-center items-center flex-col" method="POST" enctype="multipart/form-data"
+               novalidate>
+               {% csrf_token %}
+               {{form.post_image}}
+               <img src="{%static 'image/upl.png' %}" alt="Upload Your Image...." onerror="jp()"
+                    class="img-in rounded w-100 text-gray-400"
+                    style="height: 6cm;object-fit: cover;border: 1px solid rgb(217, 217, 217);" id="post_pic">
+
+               <input type="file" id="pr_imgs" style="display: none;" accept="image/jpg image/png image/jpeg"
+                    name="post_image" />
+               <div class="flex mt-2 w-100 items-center">
+                    {{form.caption}}
+                    {{form.username}}
+                    <button type="submit"
+                         class="w-20 ml-2 bg-blue-300 rounded font-bold hover:text-white hover:bg-blue-500"
+                         style="height: 0.9cm;border: 0.4px solid rgb(177, 177, 177);">Create</button>
+               </div>
+          </form>
+     </div>
+     <div class="setting-form absolute shadow-lg bg-gray-100 rounded-2xl p-5 py-10 shadow text-center hidden"
+          style="top:40%; left: 28.4%;width: 40%; margin: auto;border: 0.4px solid rgb(198, 198, 198);">
+          <h4 class="absolute" style="top: 10px;left: 20px;" style="top: 10px;right: 10px;width: 30px;height:30px">
+               Remove Your Account</h4>
+          <button class="cls-setting absolute flex items-center justify-center bg-blue-300 outline-none rounded"
+               style="top: 10px;right: 10px;width: 30px;height:30px"><i class="fa fa-close"></i></button>
+          <form action="/delete_account/{{user.id}}">
+               <button class="btn btn-danger mt-2">Remove Account</button>
+          </form>
+     </div>
+     <div id="loader" style="display: none;">
+          <div class="spinner"></div>
+     </div>
+
+     <script>
+          $('.bookmark-icon').click(function () {
+               let icons = $(this);
+               let postId = $(this).data('post-id');
+               $.ajax({
+                    url: '/savepost/' + postId,
+                    method: 'POST',
+                    headers: {
+                         'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    success: function (response) {
+                         if (response.status == 'saved') {
+
+                              icons.removeClass('fa-bookmark-o').addClass('fa-bookmark');
+                              document.getElementById("tps").innerHTML = "(" + response.total_saved_post + ")";
+                              document.getElementById("svd").innerHTML = response.status;
+                         } else {
+
+                              icons.removeClass('fa-bookmark').addClass('fa-bookmark-o');
+                              document.getElementById("tps").innerHTML = "(" + response.total_saved_post + ")";
+                              document.getElementById("svd").innerHTML = response.status;
+                         }
+                    }
+               });
+          });
+     </script>
+     <script>
+          $(".create-post").click(function () {
+               $(".post-form").show(200);
+          });
+          $(".Settings").click(function () {
+               $(".setting-form").show(200);
+          });
+          $(".cls").click(function () {
+               $(".post-form").hide();
+          });
+
+          $(".cls-setting").click(function () {
+               $(".setting-form").hide(100);
+          });
+          $(document).on('keydown', function (event) {
+               if (event.key == "Escape") {
+                    $(".post-form").hide(200);
+               }
+          });
+          $(".search-user").click(function () {
+               $(".searched").slideToggle(100);
+          });
+          $('.close_search').click(function () {
+               $(".searched").slideUp(100);
+          });
+     </script>
+     <script>
+          function jp() {
+               let txt = document.getElementById("search").value;
+               document.getElementById("demo").innerHTML = "Your text :-" + txt;
+          }
+          window.addEventListener('load', function () {
+               document.getElementById('loader').style.display = 'none';
+          });
+          let profilePic = document.getElementById("post_pic");
+          let input_file = document.getElementById("pr_imgs");
+          input_file.onchange = function () {
+               profilePic.src = URL.createObjectURL(input_file.files[0])
+          }
+     </script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"></script>
+     <script type="text/javascript">
+          $('#caption').emojioneArea({
+               pickerPosition: 'top'
+          });
+     </script>
+</body>
+
+</html>

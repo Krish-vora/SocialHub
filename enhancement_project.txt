@@ -1,0 +1,31 @@
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+     <script>
+          $('.like-btn').click(function () {
+               let postId = $(this).data('post-id');
+
+               $.ajax({
+                    url: '/likepost/' + postId,
+                    method: 'POST',
+                    headers: {
+                         'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    success: function (response) {
+                         $(this).next('.like_count').text(response.like_count);
+                    }
+               });
+          });
+
+def likepost(request,post_id):
+     post = get_object_or_404(Posts,id=post_id)
+     like_post,liked = LikePost.objects.get_or_create(user=request.user,post=post)
+     if liked:
+          post.no_of_like = post.no_of_like  + 1
+          post.save()
+     like_post.save()
+     
+     if not liked:
+          post.no_of_like = post.no_of_like - 1
+          like_post.delete()
+          post.save()
+          
+     return JsonResponse({'like_count':post.no_of_like})

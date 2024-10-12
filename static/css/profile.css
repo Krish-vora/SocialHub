@@ -1,0 +1,19 @@
+html {
+     scroll-behavior: smooth;
+}
+
+.frd-toggle:hover,
+.total_post:hover,
+.add-friend:hover {
+     border-radius: 7px;
+     border: 0.3px solid rgb(216, 216, 216);
+}
+
+.fa-close {
+     outline: none;
+     width: 30px;
+     height: 30px;
+}
+button{
+     outline: none;
+}

@@ -1,0 +1,21 @@
+.fa-arrow-right {
+     position: relative;
+     animation: cont 0.8s infinite linear;
+}
+
+@keyframes cont {
+     from {
+          opacity: 1;
+          right: 2px;
+     }
+
+     to {
+          opacity: 0.3;
+          left: 2px;
+     }
+}
+
+.fa-user {
+     font-size: 50px;
+}
+

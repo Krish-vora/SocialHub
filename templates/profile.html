@@ -1,0 +1,256 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+     <!-- login.css comman css -->
+
+     <!-- fontawasome cdn for icons -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
+     <link rel="stylesheet" href="{% static 'css/tailwind-all.css' %}">
+     <link rel="icon" href="/static/image/socialHub_Logo.jpg">
+     <script src="/static/jQuery.txt"></script>
+     <link rel="stylesheet" href="/static/css/profile.css">
+     <title>profile</title>
+</head>
+<style>
+     h1 {
+          font-weight: 900;
+     }
+
+     img {
+          height: 6.2cm;
+          border-radius: 5px;
+          object-fit: cover;
+     }
+
+     body {
+          margin: 0;
+          padding: 0;
+
+          font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+     }
+
+     .add-friend:hover {
+          border-radius: 7px;
+          border: 0.3px solid rgb(32, 32, 32);
+          color: white;
+          background-color: rgb(50, 49, 49);
+
+     }
+
+     #customAlert {
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: white;
+          height: 4cm;
+          word-break: break-all;
+     }
+
+     .frd-list::-webkit-scrollbar-thumb {
+          box-shadow: inset 0 0 10px rgb(49, 49, 50);
+          border-radius: 10px;
+     }
+
+     .frd-list::-webkit-scrollbar {
+          width: 6px;
+          scrollbar-width: thin;
+          scrollbar-gutter: stable;
+     }
+</style>
+
+<body>
+     <!-- <div class="main">
+          <h1>THis is profile page</h1>
+          <h2>THis is profile page</h2>
+          <h3>THis is profile page</h3>
+          <h4>THis is profile page</h4>
+          <h5>THis is profile page</h5>
+          <h6>THis is profile page</h6>
+     </div>
+     <div>
+          {% for i in img %}
+          {% if i.profile_photo %}
+          <img src="{{i.profile_photo.url}}"><br>
+          {% endif %}
+          {% endfor %}
+     </div> -->
+     <div class="container flex justify-center flex-col items-center shadow-lg my-1"
+          style="border-radius: 20px;border: 0.01px solid rgb(223, 223, 223);" id="main-profile">
+
+          <div class="profile-data flex justify-left flex-col w-75">
+               <a href="/home/"><i class="fa-solid fa-arrow-left text-xl absolute hover:bg-gray-200 p-1 px-2 rounded"
+                         style="top: 15px;"></i></a>
+               <div class="container flex py-3 pt-4" style="border-bottom: 1px solid rgb(146, 146, 146);">
+                    <div class="profile-photo " style="width: 40%;">
+                         <img src="{{user_profile.profile_photo.url}}"
+                              style="border-radius: 100%;width: 6cm;height: 6cm;" class="bg-blue-300">
+                    </div>
+                    <div class="profile-data flex w-50 flex-col justify-between py-2">
+                         <div>
+                              <P class="font-bold" style="font-size: 25px;">{{user_profile.user}}</P>
+                              <div class="w-100" style="word-break:keep-all;">
+                                   <p>{{user_profile.bio}}</p>
+                              </div>
+                         </div>
+                         <div class="post-posts flex  w-100 justify-left" style="margin-left: -20px;">
+                              <a href="#post_feed" class="hover:no-underline hover:text-gray-700">
+                                   <div class="total_post cursor-pointer flex items-center flex-col justify-center py-2 mr-2 hover:shadow "
+                                        style="width: 1.8cm;">
+                                        <p class="font-bold">{{total_posts}}</p>
+                                        {% if total_posts > 1 %}
+                                        <p>Posts</p>
+                                        {% else %}
+                                        <p>Post</p>
+                                        {% endif %}
+                                   </div>
+                              </a>
+                              <div
+                                   class="total_friends flex items-center flex-col justify-center relative">
+                                   <div class="frd-toggle cursor-pointer  flex items-center flex-col justify-center py-2 px-1 hover:shadow border-6"
+                                        style="width: 1.8cm;">
+                                        <p class="font-bold">{{total_friends}}</p>
+                                        {% if total_friends > 1 %}
+                                        <p>Friends</p>
+                                        {% else %}
+                                        <p>Friend</p>
+                                        {% endif %}
+                                   </div>
+                                   <div class="absolute frd-list bg-white shadow-lg rounded-lg pt-1 hidden"
+                                        style="top: 56px;border: 0.5px solid rgb(170, 170, 170);height:5.5cm;overflow: scroll;">
+                                        <div class="flex flex-col px-2" style="width: 6cm;">
+                                             <div class="flex justify-between mb-3 pl-2">
+                                                  <p class="font-bold text-gray-700 text-xl">Friends</p>
+                                                  <button
+                                                       class="cls text-lg fa fa-close hover:bg-blue-200 rounded-lg"></button>
+                                             </div>
+                                             {% if friends %}
+                                             {% for i in friends %}
+                                             <div class="frd-img flex items-center justify-between mb-2">
+                                                  <div class="frd-img flex items-center">
+                                                       <img src="{{i.friend.userprofile.profile_photo.url}}" alt=""
+                                                            class="mr-2 w-10 h-10 rounded-full bg-blue-300"
+                                                            style="object-fit: cover;">
+                                                       <p class="h-full">{{i.friend}}</p>
+                                                  </div>
+                                                  <a href="/profile/{{i.friend}}" class="hover:no-underline">
+                                                       <button
+                                                            class="btn btn-dark rounded-full btn-sm flex items-center ">View</button></a>
+                                             </div>
+                                             {% endfor %}
+                                             {% else %}
+                                             <p class="text-center font-semibold">No friends of {{user_profile.user}}
+                                             </p>
+                                             {% endif %}
+                                        </div>
+                                   </div>
+                              </div>
+
+                              {% if users != user_profile.user %}
+                              {% if users.id not in is_friend %}
+                              <form method="POST" action="/add_friend/{{user_profile.user_id}}"
+                                   class="add-friend flex items-center flex-col justify-center hover:shadow border-6 ml-2 px-2 cursor-pointer"
+                                   onclick="showAlert()">
+                                   {% csrf_token %}
+                                   <button type="submit" style="outline: none;">
+                                        <div class="flex items-center flex-col justify-center" style="width:auto;">
+                                             <p><i class="fa fa-user-plus"></i></p>
+                                             <p>Add friend</p>
+                                        </div>
+                                   </button>
+                              </form>
+                              {% endif %}
+                              {% endif %}
+                         </div>
+                    </div>
+               </div>
+               <br>
+               <div class="post pt-2" id="post_feed">
+                    <div>
+                         <div class="flex flex-wrap justify-left w-100 ">
+                              {% for i in posts %}
+                              <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/3 flex flex-col items-center justify-center post-drp"
+                                   style="object-fit: cover;margin: 0 0 4px 0;padding: 2px;">
+                                   <img src="/media/{{i.post_image}}" class="post-img"
+                                        style="border-radius: 5px 5px 0 0;border-top: 0.2px solid #cacaca ;border-right: 0.2px solid #cacaca;border-left: 0.2px solid #cacaca;">
+
+                                   <div class="bg-gray-200 show-likes h-10 flex items-center justify-between px-2 shadow"
+                                        style="width: 100%;border-radius: 0 0 5px 5px;border-bottom: 0.2px solid #cacaca ;border-right: 0.2px solid #cacaca;border-left: 0.2px solid #cacaca;">
+                                        <div><i class="fa fa-heart pr-1"></i>
+                                             {{i.no_of_like}}
+                                             {% if i.no_of_like > 1 %}
+                                             Likes
+                                             {% else %}
+                                             Like
+                                             {% endif %}</div>
+                                        {% if users == user_profile.user %}
+                                        <a href="{% url 'delete_post' i.id %}">
+                                             <button type="submit" style="outline: none;"><i
+                                                       class="fa fa-trash-alt cursor-pointer"
+                                                       title="Delete Post"></i></button></a>
+                                        {% endif %}
+                                   </div>
+                              </div>
+                              {% endfor %}
+                              {% if posts.count == 0 %}
+                              <div
+                                   class="bg-gray-100 rounded-lg w-100 flex items-center justify-center mx-auto h-10 mb-4">
+                                   <p class="text-gray-600 font-semibold">No Posts uploaded by {{user_profile.user}}.
+                                   <p>
+                              </div>
+                              {% endif %}
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div>
+
+     <div id="customAlert" class="rounded-lg shadow-lg w-50 text-center ">
+          <div class="rounded-full w-20 bg-green-400 h-20 absolute items-center flex justify-center"
+               style="top: -35px;left: 43%;"><i class="fa fa-check text-5xl text-white"></i></div>
+          <p style="line-height: 4cm;" class="bg-gray-100 rounded-lg text-xl">{{user_profile.user}}&nbsp;Is Added To
+               Friend!!!</p>
+     </div>
+     <!-- <div class="open_image w-50 rounded mx-auto shadow p-4">
+          <div class="inner_image w-100">
+               <img src="/media/download.png" alt="">
+          </div>
+     </div> -->
+     <script>
+
+          function showAlert() {
+               const claas_name = document.getElementById("main-profile");
+               const alertBox = document.getElementById("customAlert");
+               alertBox.style.display = "block";
+               claas_name.style.filter = "blur(3px)";
+               document.body.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+               setTimeout(() => {
+                    alertBox.style.display = "none";
+               }, 2000);
+          }
+          $(document).ready(function () {
+               $(".frd-toggle").click(function () {
+                    $(".frd-list").slideToggle(200);
+               });
+               $(document).on('keydown', function (event) {
+                    if (event.key == "Escape") {
+                         $(".frd-list").slideUp(200);
+                    }
+               });
+               $(".cls").click(function () {
+                    $(".frd-list").slideToggle(200);
+               });
+          });
+     </script>
+</body>
+
+</html>

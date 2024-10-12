@@ -1,0 +1,11 @@
+pages:-
+1.landing page
+2.login
+3.signup
+4.home 
+5.profile
+6.edit profile
+
+pages data & features OR Fields
+
+1.profile:- profile photo, user name or nickname, summary and about information,interests and Education, and Add friend button.
