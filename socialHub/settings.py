@@ -74,16 +74,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'socialHub.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
@@ -92,10 +85,6 @@ DATABASES = {
             'host': 'mongodb+srv://kaushikmangukiyaa2:cZhJ5KjIwgwrbG8W@cluster0.uqzr3.mongodb.net/',  # MongoDB connection string
         }
     }
-
-#mongodb+srv://kaushikmangukiyaa2:cZhJ5KjIwgwrbG8W@cluster0.uqzr3.mongodb.net/
-#cZhJ5KjIwgwrbG8W
-
 }
 
 # Password validation
