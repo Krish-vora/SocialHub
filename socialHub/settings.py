@@ -74,20 +74,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'socialHub.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'socialhub',
+        'CLIENT': {
+            'host': 'mongodb+srv://kaushikmangukiyaa2:cZhJ5KjIwgwrbG8W@cluster0.uqzr3.mongodb.net/',  # MongoDB connection string
+        }
     }
 }
 
@@ -258,7 +254,7 @@ JAZZMIN_SETTINGS = {
     # UI Tweaks #
     #############
     # Relative paths to custom CSS/JS scripts (must be present in static files)
-    "custom_css": "E:\socialHub\socialHub\static\css\admin.css",
+    "custom_css":None,
     "custom_js": None,
     # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
     "use_google_fonts_cdn": True,
