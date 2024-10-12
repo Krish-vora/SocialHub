@@ -285,3 +285,5 @@ JAZZMIN_SETTINGS["show_ui_builder"] = True
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = "/media/"
+
+#kjkjkj
