@@ -52,7 +52,7 @@ def signup(request):
         else:
             messages.error(request, "Password and confirm password must be same!")
     return render(request,'signup.html')
-
+# krish prajapati
 @login_required(login_url='login_page')
 def home(request):      
      if request.method == 'POST':         
