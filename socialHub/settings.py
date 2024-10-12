@@ -88,7 +88,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'socialhub',
+        'CLIENT': {
+            'host': 'mongodb+srv://kaushikmangukiyaa2:cZhJ5KjIwgwrbG8W@cluster0.uqzr3.mongodb.net/',  # MongoDB connection string
+        }
     }
+
+#mongodb+srv://kaushikmangukiyaa2:cZhJ5KjIwgwrbG8W@cluster0.uqzr3.mongodb.net/
+#cZhJ5KjIwgwrbG8W
+
 }
 
 # Password validation
@@ -258,7 +265,7 @@ JAZZMIN_SETTINGS = {
     # UI Tweaks #
     #############
     # Relative paths to custom CSS/JS scripts (must be present in static files)
-    "custom_css": "E:\socialHub\socialHub\static\css\admin.css",
+    "custom_css":None,
     "custom_js": None,
     # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
     "use_google_fonts_cdn": True,
@@ -285,5 +292,3 @@ JAZZMIN_SETTINGS["show_ui_builder"] = True
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = "/media/"
-
-#kjkjkj
